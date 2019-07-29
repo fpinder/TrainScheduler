@@ -9,18 +9,29 @@
     width: 800px;
     height: 150px;
     color: #dde20c;
-    padding-top: 30px;
+    padding-top: 10px;
+    margin-bottom: 10px;
     
 }
 
 .table {
-    width: 100%;
+
     margin-top: 20px;
     margin-left: 246px;
     width: 62%;
- text-align: left;
+    text-align: left;
+    margin-bottom: 12px;
 }
+ 
+.title{
 
+    text-align: center;
+    background-color: rgb(0, 26, 255);
+    color: white;  
+    margin-top: 20px;
+    margin-left: 246px;
+    width: 62%;
+}
 .label{
     font-size: 20px;
     
@@ -37,11 +48,7 @@ input {
   .form{
     margin-left: 246px;
     width: 62%;
+    padding: 7px;
   
   }
-
-  .title{
-      background-color: rgb(0, 26, 255);
-      color: white;    
-}
 
