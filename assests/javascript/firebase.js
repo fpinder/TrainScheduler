@@ -19,7 +19,7 @@ $(document).ready(function () {
     var trainName = "";
     var TrainDestination = "";
     var FirstTrain = "";
-    var TrainFrequency = "";
+    var TrainFrequency = 0;
 
     //capture buton click 
     $("#add-train").on("click", function () {
@@ -63,6 +63,7 @@ $(document).ready(function () {
 
 
         console.log("This is the FirstTrain " + FirstTrain);
+
         var firstTrainMoment = moment(FirstTrain, 'HH:mm');
         var nowMoment = moment(); //current date and time
 
@@ -70,6 +71,11 @@ $(document).ready(function () {
         console.log("current date and time " + nowMoment)
 
         var minutesSinceFirstArrival = nowMoment.diff(firstTrainMoment, 'minutes');
+        var minutesSinceLastArrival = minutesSinceFirstArrival % frequency;
+        var minutesAway = frequency - minutesSinceLastArrival;
+
+        var nextArrival = nowMoment.add(minutesAway, 'minutes');
+        var formatNextArrival = nextArrival.format("HH:mm A");
 
         console.log("minutes Since FirstArrival " + minutesSinceFirstArrival)
 
@@ -82,6 +88,8 @@ $(document).ready(function () {
             "<tr><td>" + snapshot.val().name + "</td>" +
             "<td>" + snapshot.val().Destination + "</td>" +
             "<td>" + snapshot.val().Frequency + "</td>" +
+            "<td>" + snapshot.val().formatNextArrival + "</td>" +
+            "<td>" + snapshot.val().minutesAway + "</td>" +
 
             "</tr>"
         );
