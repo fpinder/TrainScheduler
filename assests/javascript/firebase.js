@@ -78,13 +78,6 @@ $(document).ready(function () {
         var tn = ("<td>");
         var td = ("<td>");
 
-        $("#newTrains").append(
-            "<tr><td>" + snapshot.val().name + "</td>" +
-            "<td>" + snapshot.val().Destination + "</td>" +
-            "<td>" + snapshot.val().Frequency + "</td>" +
-
-            "</tr>"
-        );
 
         // tn.append(snapshot.val().name);
 
