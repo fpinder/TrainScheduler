@@ -1,5 +1,12 @@
-// Your web app's Firebase configuration
+// My web app's Firebase configuration
 $(document).ready(function () {
+
+    // Initial Values
+    var trainName = "";
+    var trianDestination = "";
+    var firstTrain = "";
+    var trainFrequency = 0;
+
     var firebaseConfig = {
         apiKey: "AIzaSyAdQCxhJwuFPuzMZuCcAdDi9otNySpvLe8",
         authDomain: "train-schedule-e3b61.firebaseapp.com",
@@ -17,9 +24,13 @@ $(document).ready(function () {
 
     // Initial Values
     var trainName = "";
-    var TrainDestination = "";
-    var FirstTrain = "";
-    var TrainFrequency = 0;
+    var trianDestination = "";
+    var firstTrain = "";
+    var trainFrequency = 0;
+
+    // form validation for Time using jQuery Mask plugin
+    var firstTrain = $("#fTrain").mask("00:00");
+    var trainFrequency = $("#frequency").mask("00");
 
     //capture buton click 
     $("#add-train").on("click", function () {
@@ -28,84 +39,105 @@ $(document).ready(function () {
         event.preventDefault();
 
         var trainName = $("#tName").val().trim();
-        var TrainDestination = $("#destination").val().trim();
-        var FirstTrain = $("#fTrain").val().trim();
-        var TrainFrequency = $("#frequency").val().trim();
+        var trianDestination = $("#destination").val().trim();
+        var firstTrain = $("#fTrain").val().trim();
+        var trainFrequency = $("#frequency").val().trim();
+
+        // form validation - if empty - alert
+        if (trainName.length === 0 || trianDestination.length === 0 || firstTrain.length === 0 || trainFrequency.length === 0) {
+            alert("Please Fill All Required Fields");
+        } else {
 
 
 
-        // console.log("This is the Tarin name " + trainName)
-        // console.log("This is the TrainDestination " + TrainDestination)
-        //  console.log("This is the FirstTrain " + FirstTrain);
-        // console.log("This is the Train Frequency " + TrainFrequency)
+            // Moment Time Conversion
+            var fistTrainConvertion = moment(firstTrain, "HH:mm").subtract(1, "years");
+            // console.log("Fist Train Convertion " + fistTrainConvertion);
 
-        database.ref().push({
-            name: trainName,
-            Destination: TrainDestination,
-            FirstTrain: FirstTrain,
-            Frequency: TrainFrequency,
-        });
+            // compute the difference in time from 'now' and the first train
+            var trainDiff = moment().diff(moment(fistTrainConvertion), "minutes");
+            // console.log("difference in time from 'now' and the first train " + trainDiff);
+            // console.log("Frequency " + trainFrequency);
 
+            // get the remainder of time by the frequency & time difference
+            var trainTimeRemainder = trainDiff % trainFrequency;
+            // console.log("Train Time Remainder " + trainTimeRemainder);
+
+            //subtract the remainder from the frequency to get the minutes till trian arrival ("Minutes Away in table")
+            var minutesTillArrival = trainFrequency - trainTimeRemainder;
+            // console.log("Minutes Till Arrival " + minutesTillArrival);
+
+            // Add minutesTillArrival to find next train & convert to standard time format
+            var nextTrainArrival = moment().add(minutesTillArrival, "minutes");
+            // console.log("Next Train Arrival " + nextTrainArrival);
+
+            //Arrival time ("Next Arival in table")
+            var arrivalTime = moment(nextTrainArrival).format("hh:mm A");
+            // console.log("Arrival Time " + arrivalTime);
+
+            database.ref().push({
+                name: trainName,
+                Destination: trianDestination,
+                FirstTrain: firstTrain,
+                Frequency: trainFrequency,
+                date_added: firebase.database.ServerValue.TIMESTAMP
+
+                //Clear Train entry Values
+            });
+
+            $("#tName").val('');
+            $("#destination").val('');
+            $("#fTrain").val('')
+            $("#frequency").val('');
+        }
     });
+
     database.ref().on("child_added", function (snapshot) {
 
-        // Log everything that's coming out of snapshot
+        firstTrain = snapshot.val().FirstTrain;
+        trainFrequency = snapshot.val().Frequency;
+
         console.log(snapshot.val());
-        // console.log(snapshot.val().name);
-        // console.log(snapshot.val().Destination);
-        // console.log(snapshot.val().FirstTrain);
-        // console.log(snapshot.val().Frequency);
 
-        var trainName = snapshot.val().name;
-        var TrainDestination = snapshot.val().Destination;
-        var FirstTrain = snapshot.val().FirstTrain;
-        var TrainFrequency = snapshot.val().Frequency;
+        console.log("First train value " + firstTrain)
+        // console.log("current time " + moment().format('LLLL'));
+
+        // Moment Time Conversion
+        var fistTrainConvertion = moment(firstTrain, "HH:mm").subtract(1, "years");
+        console.log("Fist Train Convertion " + fistTrainConvertion);
+
+        // compute the difference in time from 'now' and the first train
+        var trainDiff = moment().diff(moment(fistTrainConvertion), "minutes");
+        console.log("difference in time from 'now' and the first train " + trainDiff);
+        console.log("Frequency " + trainFrequency);
+
+        // get the remainder of time by the frequency & time difference
+        var trainTimeRemainder = trainDiff % trainFrequency;
+        console.log("Train Time Remainder " + trainTimeRemainder);
+
+        //subtract the remainder from the frequency to get the minutes till trian arrival ("Minutes Away in table")
+        var minutesTillArrival = trainFrequency - trainTimeRemainder;
+        console.log("Minutes Till Arrival " + minutesTillArrival);
+
+        // Add minutesTillArrival to find next train & convert to standard time format
+        var nextTrainArrival = moment().add(minutesTillArrival, "minutes");
+        console.log("Next Train Arrival " + nextTrainArrival);
+
+        //Arrival time ("Next Arival in table")
+        var arrivalTime = moment(nextTrainArrival).format("hh:mm A");
+        console.log("Arrival Time " + arrivalTime);
 
 
-        console.log("This is the FirstTrain " + FirstTrain);
-
-        var firstTrainMoment = moment(FirstTrain, 'HH:mm');
-        var nowMoment = moment(); //current date and time
-
-        console.log("firstTrainConverted " + firstTrainMoment)
-        console.log("current date and time " + nowMoment)
-
-        var minutesSinceFirstArrival = nowMoment.diff(firstTrainMoment, 'minutes');
-        var minutesSinceLastArrival = minutesSinceFirstArrival % frequency;
-        var minutesAway = frequency - minutesSinceLastArrival;
-
-        var nextArrival = nowMoment.add(minutesAway, 'minutes');
-        var formatNextArrival = nextArrival.format("HH:mm A");
-
-        console.log("minutes Since FirstArrival " + minutesSinceFirstArrival)
-
-        // Change the HTML to reflect the data 
-        var tr = ("<tr>");
-        var tn = ("<td>");
-        var td = ("<td>");
 
         $("#newTrains").append(
             "<tr><td>" + snapshot.val().name + "</td>" +
             "<td>" + snapshot.val().Destination + "</td>" +
-            "<td>" + snapshot.val().Frequency + "</td>" +
-            "<td>" + snapshot.val().formatNextArrival + "</td>" +
-            "<td>" + snapshot.val().minutesAway + "</td>" +
+            "<td class='tableData'>" + snapshot.val().Frequency + "</td>" +
+            "<td>" + arrivalTime + "</td>" +
+            "<td class='tableData'>" + minutesTillArrival + "</td>" +
 
             "</tr>"
         );
-
-        // tn.append(snapshot.val().name);
-
-
-        // tr.append(tn);
-
-        // $('#newTrains').append(tr);
-
-        // $("#name-display").text(snapshot.val().name);
-        // $("#email-display").text(snapshot.val().email);
-        // $("#age-display").text(snapshot.val().age);
-        // $("#comment-display").text(snapshot.val().comment);
-
         // Handle the errors
     }, function (errorObject) {
         console.log("Errors handled: " + errorObject.code);

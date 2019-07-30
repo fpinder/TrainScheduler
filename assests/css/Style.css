@@ -12,6 +12,9 @@
     padding-top: 10px;
     margin-bottom: 10px;
     
+    box-sizing: border-box;
+    border-color: #141f3d;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #141f3d;
 }
 
 .table {
@@ -21,6 +24,8 @@
     width: 62%;
     text-align: left;
     margin-bottom: 12px;
+    border-color: #141f3d;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #141f3d;
 }
  
 .title{
@@ -31,6 +36,9 @@
     margin-top: 20px;
     margin-left: 246px;
     width: 62%;
+    box-sizing: border-box;
+    border-color: #141f3d;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #141f3d;
 }
 .label{
     font-size: 20px;
@@ -43,6 +51,8 @@ input {
     padding: 4px 20px;
     margin: 10px 0;
     box-sizing: border-box;
+    border-color: #141f3d;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #141f3d;
   }
 
   .form{
@@ -51,4 +61,20 @@ input {
     padding: 7px;
   
   }
+
+  .tableData {
+
+    text-align: center;
+    /* padding-right: 40px; */
+
+    border-style: solid;
+    width: 125px;
+    border-bottom-style: groove;
+    border-bottom-color: coral;
+    border-bottom-width: 3px;
+  }
+  /* .form-control:focus {
+    border-color: #141f3d;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #141f3d;
+} */
 
