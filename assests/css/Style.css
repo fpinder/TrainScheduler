@@ -1,15 +1,13 @@
 .jumbotron{
  
-    margin: auto;
-    margin-top: 20px;
-    text-align: center;
+    margin-left: 22%;
     background-image: url(https://media.giphy.com/media/kychvkiZ9C85JrEAlG/giphy.gif);
     background-size: cover;
     background-position: center;
-    width: 800px;
-    height: 150px;
+    width: 50%;
+    height: 100%;
     color: #dde20c;
-    padding-top: 10px;
+    padding-top: 50px;
     margin-bottom: 10px;
     
     box-sizing: border-box;
@@ -78,8 +76,6 @@ input {
   .tableData {
 
     text-align: center;
-    /* padding-right: 40px; */
-
     border-style: solid;
     width: 125px;
     border-bottom-style: groove;
