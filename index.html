@@ -31,10 +31,12 @@
     <!-- javascript -->
     <script type="text/javascript" src="assests/javascript/firebase.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+
     <!-- Momment -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.26/moment-timezone.min.jsS"></script> -->
 
-    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
 
 
 
@@ -65,22 +67,25 @@
         </div>
 
         <div class="form">
+            <div>
+                <h3 class="title"><strong>Add Train </strong></h3>
+            </div>
             <form>
                 <div class="form-group">
-                    <label for="Train Name">Train Name </label>
-                    <input type="text" class="form-control" id="tName">
+                    <label for="trainName">Train Name </label>
+                    <input type="text" class="form-control" id="tName" required>
                 </div>
                 <div class="form-group">
-                    <label for="Destination">Destination</label>
-                    <input type="text" class="form-control" id="destination">
+                    <label for="destination">Destination</label>
+                    <input type="text" class="form-control" id="destination" required>
                 </div>
                 <div class="form-group">
-                    <label for="First Train">First Train Time (HH:mm -Military Time)</label>
-                    <input type="text" class="form-control" id="fTrain">
+                    <label for="firstTrain">First Train Time (HH:mm -Military Time)</label>
+                    <input type="text" class="form-control" placeholder="HH:MM" id="fTrain" required>
                 </div>
                 <div class="form-group">
-                    <label for="Frequency">Frequency (min)</label>
-                    <input type="number" class="form-control" id="frequency">
+                    <label for="frequency">Frequency (min)</label>
+                    <input type="number" class="form-control" id="frequency" required>
                 </div>
                 <button type="submit" class="btn btn-primary" id="add-train">Submit</button>
             </form>
