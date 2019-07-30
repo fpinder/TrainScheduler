@@ -52,28 +52,21 @@ $(document).ready(function () {
 
             // Moment Time Conversion
             var fistTrainConvertion = moment(firstTrain, "HH:mm").subtract(1, "years");
-            // console.log("Fist Train Convertion " + fistTrainConvertion);
 
             // compute the difference in time from 'now' and the first train
             var trainDiff = moment().diff(moment(fistTrainConvertion), "minutes");
-            // console.log("difference in time from 'now' and the first train " + trainDiff);
-            // console.log("Frequency " + trainFrequency);
 
             // get the remainder of time by the frequency & time difference
             var trainTimeRemainder = trainDiff % trainFrequency;
-            // console.log("Train Time Remainder " + trainTimeRemainder);
 
             //subtract the remainder from the frequency to get the minutes till trian arrival ("Minutes Away in table")
             var minutesTillArrival = trainFrequency - trainTimeRemainder;
-            // console.log("Minutes Till Arrival " + minutesTillArrival);
 
             // Add minutesTillArrival to find next train & convert to standard time format
             var nextTrainArrival = moment().add(minutesTillArrival, "minutes");
-            // console.log("Next Train Arrival " + nextTrainArrival);
 
             //Arrival time ("Next Arival in table")
             var arrivalTime = moment(nextTrainArrival).format("hh:mm A");
-            // console.log("Arrival Time " + arrivalTime);
 
             database.ref().push({
                 name: trainName,
@@ -97,38 +90,28 @@ $(document).ready(function () {
         firstTrain = snapshot.val().FirstTrain;
         trainFrequency = snapshot.val().Frequency;
 
-        console.log(snapshot.val());
-
-        console.log("First train value " + firstTrain)
+        // console.log(snapshot.val());
         // console.log("current time " + moment().format('LLLL'));
 
         // Moment Time Conversion
         var fistTrainConvertion = moment(firstTrain, "HH:mm").subtract(1, "years");
-        console.log("Fist Train Convertion " + fistTrainConvertion);
 
         // compute the difference in time from 'now' and the first train
         var trainDiff = moment().diff(moment(fistTrainConvertion), "minutes");
-        console.log("difference in time from 'now' and the first train " + trainDiff);
-        console.log("Frequency " + trainFrequency);
 
         // get the remainder of time by the frequency & time difference
         var trainTimeRemainder = trainDiff % trainFrequency;
-        console.log("Train Time Remainder " + trainTimeRemainder);
 
         //subtract the remainder from the frequency to get the minutes till trian arrival ("Minutes Away in table")
         var minutesTillArrival = trainFrequency - trainTimeRemainder;
-        console.log("Minutes Till Arrival " + minutesTillArrival);
 
         // Add minutesTillArrival to find next train & convert to standard time format
         var nextTrainArrival = moment().add(minutesTillArrival, "minutes");
-        console.log("Next Train Arrival " + nextTrainArrival);
 
         //Arrival time ("Next Arival in table")
         var arrivalTime = moment(nextTrainArrival).format("hh:mm A");
-        console.log("Arrival Time " + arrivalTime);
 
-
-
+        //Add data to the table
         $("#newTrains").append(
             "<tr><td>" + snapshot.val().name + "</td>" +
             "<td>" + snapshot.val().Destination + "</td>" +
